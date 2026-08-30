@@ -30,6 +30,7 @@ export default defineConfig({
      */
     {
       name: 'login',
+      testDir: './tests/auth',
       testMatch: /.*\.setup\.ts/,
       use: { ...devices['Desktop Chrome'] },
     },
@@ -40,7 +41,7 @@ export default defineConfig({
      */
     {
       name: 'home',
-      testMatch: /home[\\/].*\.spec\.ts/,
+      testDir: './tests/home',
       dependencies: ['login'],
       use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
     },
@@ -51,14 +52,14 @@ export default defineConfig({
      */
     {
       name: 'prescription',
-      testMatch: /prescription[\\/].*\.spec\.ts/,
+      testDir: './tests/prescription',
       dependencies: ['login'],
       use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
     },
 
     {
       name: 'user-profile',
-      testMatch: /user-profile[\\/].*\.spec\.ts/,
+      testDir: './tests/user-profile',
       dependencies: ['login'],
       use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
     },
