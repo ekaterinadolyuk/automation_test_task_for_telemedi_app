@@ -1,0 +1,21 @@
+{
+  "name": "telemedi-automation-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright + TypeScript automation tests for the Telemedi patient application",
+  "scripts": {
+    "postinstall": "playwright install chromium",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:home": "playwright test --project=home",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^22.10.2",
+    "dotenv": "^16.4.7",
+    "typescript": "^5.7.2"
+  }
+}
