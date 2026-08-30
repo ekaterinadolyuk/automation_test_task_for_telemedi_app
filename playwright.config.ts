@@ -55,5 +55,12 @@ export default defineConfig({
       dependencies: ['login'],
       use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
     },
+
+    {
+      name: 'user-profile',
+      testMatch: /user-profile[\\/].*\.spec\.ts/,
+      dependencies: ['login'],
+      use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
+    },
   ],
 });

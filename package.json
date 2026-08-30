@@ -10,6 +10,7 @@
     "test:ui": "playwright test --ui",
     "test:home": "playwright test --project=home",
     "test:prescription": "playwright test --project=prescription",
+    "test:user-profile": "playwright test --project=user-profile",
     "report": "playwright show-report",
     "typecheck": "tsc --noEmit"
   },
