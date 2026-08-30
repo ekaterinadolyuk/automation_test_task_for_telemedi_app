@@ -11,8 +11,13 @@ End-to-end tests for the Telemedi patient panel
 
   ```
   TM_BASE_URL=https://testyautomatyczne.telemedi.com
+
   TM_EMAIL=<test account email>
   TM_PASSWORD=<test account password>
+
+  TM_PATIENT_NAME=<patient name shown in the app>
+  TM_PATIENT_PESEL=<masked PESEL shown in the app>
+  TM_PATIENT_BIRTH_DATE=<date of birth shown in the app>
   ```
 
 ## Project setup

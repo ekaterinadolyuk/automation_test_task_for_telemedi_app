@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { BASE_URL } from '../../src/config/env';
+import { BASE_URL, PATIENT_BIRTH_DATE, PATIENT_NAME, PATIENT_PESEL } from '../../src/config/env';
 import { BookingMenu } from '../../src/pages/BookingMenu';
 import { ConsultationsPage } from '../../src/pages/ConsultationsPage';
 import { HomePage } from '../../src/pages/HomePage';
@@ -19,7 +19,11 @@ const DOCTOR_DESCRIPTION = 'Lekarz ogólny - konsultacja z receptą';
 const DOCTOR_ASSIGN_INFO =
   '*Ten lekarz zostanie przypisany do Twojej wizyty dopiero gdy dokonasz rezerwacji. Nie zwlekaj więc.';
 
-const PATIENT_DETAILS = ['Pacjent Testowy', 'PESEL: ********132', 'Data urodzenia: 2000-01-01'];
+const PATIENT_DETAILS = [
+  PATIENT_NAME,
+  `PESEL: ${PATIENT_PESEL}`,
+  `Data urodzenia: ${PATIENT_BIRTH_DATE}`,
+];
 
 const CONSENTS = [
   'Jestem świadomy/a, że po wypełnieniu formularza oraz umówieniu konsultacji lekarskiej lekarz może się ze mną kontaktować telefonicznie lub na czacie.*',
