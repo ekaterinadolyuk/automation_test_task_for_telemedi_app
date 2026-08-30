@@ -1,5 +1,7 @@
 # Telemedi — Playwright automation tests
 
+[![Playwright tests](https://github.com/ekaterinadolyuk/automation_test_task_for_telemedi_app/actions/workflows/playwright.yml/badge.svg)](https://github.com/ekaterinadolyuk/automation_test_task_for_telemedi_app/actions/workflows/playwright.yml)
+
 End-to-end tests for the Telemedi patient panel
 ([testyautomatyczne.telemedi.com/pl](https://testyautomatyczne.telemedi.com/pl)), written in
 **Playwright + TypeScript**.
