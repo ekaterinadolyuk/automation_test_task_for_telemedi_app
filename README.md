@@ -35,6 +35,7 @@ Defined in [`playwright.config.ts`](playwright.config.ts):
 | ------- | ----------- |
 | `login` | Logs in through the UI and saves the session to `playwright/.auth/user.json`. |
 | `home`  | Declares `dependencies: ['login']` and reuses that session. Opens the homepage as a logged-in patient. |
+| `prescription` | Books a prescription consultation up to the handover to the payment operator, then cancels the reservation. |
 
 New feature projects should copy the `home` entry, keeping the same `dependencies` and `storageState`.
 
@@ -44,6 +45,7 @@ New feature projects should copy the `home` entry, keeping the same `dependencie
 | ------- | ----------- |
 | `npm test` | Run every project |
 | `npm run test:home` | Run only the `home` project |
+| `npm run test:prescription` | Run only the `prescription` project |
 | `npm run test:headed` | Run with a visible browser |
 | `npm run test:ui` | Open Playwright UI mode |
 | `npm run report` | Open the last HTML report |
@@ -55,8 +57,9 @@ New feature projects should copy the `home` entry, keeping the same `dependencie
 ├── playwright.config.ts     # projects, dependencies, shared settings
 ├── src
 │   ├── config/env.ts        # base URL, credentials, storage-state path
-│   └── pages                # page objects (LoginPage, HomePage)
+│   └── pages                # page objects
 └── tests
-    ├── auth/login.setup.ts  # the `login` project
-    └── home/home.spec.ts    # the `home` project
+    ├── auth/login.setup.ts                  # the `login` project
+    ├── home/home.spec.ts                    # the `home` project
+    └── prescription/e_dolyuk_test.spec.ts   # the `prescription` project
 ```

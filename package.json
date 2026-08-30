@@ -9,6 +9,7 @@
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "test:home": "playwright test --project=home",
+    "test:prescription": "playwright test --project=prescription",
     "report": "playwright show-report",
     "typecheck": "tsc --noEmit"
   },

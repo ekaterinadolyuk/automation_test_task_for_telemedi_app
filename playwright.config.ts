@@ -40,7 +40,18 @@ export default defineConfig({
      */
     {
       name: 'home',
-      testMatch: /.*\.spec\.ts/,
+      testMatch: /home[\\/].*\.spec\.ts/,
+      dependencies: ['login'],
+      use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
+    },
+
+    /**
+     * Prescription consultation booking. Books a real consultation and cancels
+     * it again in the post-condition, so it runs on its own worker.
+     */
+    {
+      name: 'prescription',
+      testMatch: /prescription[\\/].*\.spec\.ts/,
       dependencies: ['login'],
       use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
     },
