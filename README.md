@@ -4,61 +4,42 @@ End-to-end tests for the Telemedi patient panel
 ([testyautomatyczne.telemedi.com/pl](https://testyautomatyczne.telemedi.com/pl)), written in
 **Playwright + TypeScript**.
 
-## Requirements
+## Prerequisites
 
-- Node.js 18 or newer (developed on Node 24)
-- Git
+- Node.js 18+
+- A `.env` file in the project root:
 
-## Run the tests with one command
+  ```
+  TM_BASE_URL=https://testyautomatyczne.telemedi.com
+  TM_EMAIL=<test account email>
+  TM_PASSWORD=<test account password>
+  ```
 
-Credentials are **not** stored in this repository, so pass them to the command below.
-Replace `<email>` and `<password>` with the test-account credentials.
-
-**Git Bash / macOS / Linux**
-
-```bash
-git clone https://github.com/ekaterinadolyuk/automation_test_task_for_telemedi_app.git && cd automation_test_task_for_telemedi_app && npm install && TM_EMAIL='<email>' TM_PASSWORD='<password>' npm test
-```
-
-**Windows PowerShell**
-
-```powershell
-git clone https://github.com/ekaterinadolyuk/automation_test_task_for_telemedi_app.git; cd automation_test_task_for_telemedi_app; npm install; $env:TM_EMAIL='<email>'; $env:TM_PASSWORD='<password>'; npm test
-```
-
-`npm install` also downloads the Chromium browser automatically, so there is no extra setup step.
-
-### Repeat runs
-
-To avoid retyping the credentials, copy `.env.example` to `.env` and fill it in once — the file is
-git-ignored:
+## Run the tests
 
 ```bash
-cp .env.example .env   # then edit TM_EMAIL and TM_PASSWORD
-npm test
+npm install && npm test
 ```
 
-## How the projects fit together
+## Projects
 
-The suite is split into two Playwright projects, wired together in [`playwright.config.ts`](playwright.config.ts):
+Defined in [`playwright.config.ts`](playwright.config.ts):
 
-| Project | What it does |
-| ------- | ------------ |
-| `login` | Logs in through the UI and saves the authenticated session to `playwright/.auth/user.json`. |
-| `home`  | Declares `dependencies: ['login']` and reuses that session, so its tests start already logged in. |
+| Project | Description |
+| ------- | ----------- |
+| `login` | Logs in through the UI and saves the session to `playwright/.auth/user.json`. |
+| `home`  | Declares `dependencies: ['login']` and reuses that session. Opens the homepage as a logged-in patient. |
 
-Because `home` depends on `login`, running any test triggers the login first — a single time per run,
-not once per test. Adding a new feature project is a matter of copying the `home` entry and keeping
-the same `dependencies` and `storageState`.
+New feature projects should copy the `home` entry, keeping the same `dependencies` and `storageState`.
 
-## Useful commands
+## Commands
 
 | Command | Description |
 | ------- | ----------- |
-| `npm test` | Run every project (`login`, then `home`) |
-| `npm run test:home` | Run only the `home` project (still logs in first) |
+| `npm test` | Run every project |
+| `npm run test:home` | Run only the `home` project |
 | `npm run test:headed` | Run with a visible browser |
-| `npm run test:ui` | Open the Playwright UI mode |
+| `npm run test:ui` | Open Playwright UI mode |
 | `npm run report` | Open the last HTML report |
 | `npm run typecheck` | Type-check without running tests |
 
