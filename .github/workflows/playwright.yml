@@ -1,0 +1,52 @@
+name: Playwright tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# The prescription test books a real consultation and cancels it again, so only
+# one run may touch the test account at a time.
+concurrency:
+  group: playwright-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium and its system dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npm test
+        env:
+          TM_BASE_URL: ${{ vars.TM_BASE_URL || 'https://testyautomatyczne.telemedi.com' }}
+          TM_EMAIL: ${{ secrets.TM_EMAIL }}
+          TM_PASSWORD: ${{ secrets.TM_PASSWORD }}
+          TM_PATIENT_NAME: ${{ secrets.TM_PATIENT_NAME }}
+          TM_PATIENT_PESEL: ${{ secrets.TM_PATIENT_PESEL }}
+          TM_PATIENT_BIRTH_DATE: ${{ secrets.TM_PATIENT_BIRTH_DATE }}
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
