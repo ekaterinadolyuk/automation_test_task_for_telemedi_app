@@ -15,10 +15,16 @@ End-to-end tests for the Telemedi patient panel
   TM_PASSWORD=<test account password>
   ```
 
+## Project setup
+
+```bash
+npm install
+```
+
 ## Run the tests
 
 ```bash
-npm install && npm test
+npm test
 ```
 
 ## Projects
