@@ -62,6 +62,7 @@ New feature projects should copy the `home` entry, keeping the same `dependencie
 ├── playwright.config.ts     # projects, dependencies, shared settings
 ├── src
 │   ├── config/env.ts        # base URL, credentials, storage-state path
+│   ├── data/constants.ts    # medicine and doctor test data
 │   └── pages                # page objects
 └── tests
     ├── auth/login.setup.ts                  # the `login` project

@@ -1,23 +1,16 @@
 import { expect, test } from '@playwright/test';
 import { BASE_URL, PATIENT_BIRTH_DATE, PATIENT_NAME, PATIENT_PESEL } from '../../src/config/env';
+import { DOCTOR, MEDICINE, MEDICINE_PRICE_WITH_CURRENCY } from '../../src/data/constants';
 import { BookingMenu } from '../../src/pages/BookingMenu';
 import { ConsultationsPage } from '../../src/pages/ConsultationsPage';
 import { HomePage } from '../../src/pages/HomePage';
 import { PrescriptionPage } from '../../src/pages/PrescriptionPage';
 
-const DRUG_NAME = 'Normaclin';
-const EXPECTED_SUGGESTIONS = 6;
 const EXPECTED_CONDITION_TILES = 17;
-const CONSULTATION_PRICE = '59.00';
 const PAYMENT_OPERATOR_URL = 'https://secure.payu.com/pay/';
 
 const MENU_OPTION_NAME = 'Recepta Konsultacja z ankietą medyczną';
 const TRANSPARENT = 'rgba(0, 0, 0, 0)';
-
-const DOCTOR_NAME = 'lek. lek. Michał Stach';
-const DOCTOR_DESCRIPTION = 'Lekarz ogólny - konsultacja z receptą';
-const DOCTOR_ASSIGN_INFO =
-  '*Ten lekarz zostanie przypisany do Twojej wizyty dopiero gdy dokonasz rezerwacji. Nie zwlekaj więc.';
 
 const PATIENT_DETAILS = [
   PATIENT_NAME,
@@ -85,15 +78,15 @@ test.describe('Prescription consultation', () => {
       await expect(prescriptionPage.conditionTiles).toHaveCount(EXPECTED_CONDITION_TILES);
     });
 
-    await test.step(`3. Enter "${DRUG_NAME}" into the drug field`, async () => {
-      await prescriptionPage.searchForDrug(DRUG_NAME);
+    await test.step(`3. Enter "${MEDICINE.searchName}" into the drug field`, async () => {
+      await prescriptionPage.searchForDrug(MEDICINE.searchName);
 
       // a) six suggestions are returned
-      await expect(prescriptionPage.suggestions).toHaveCount(EXPECTED_SUGGESTIONS);
+      await expect(prescriptionPage.suggestions).toHaveCount(MEDICINE.expectedSuggestions);
 
       // b) every suggestion is for the searched drug
       for (const suggestion of await prescriptionPage.suggestions.all()) {
-        await expect(suggestion).toContainText(DRUG_NAME);
+        await expect(suggestion).toContainText(MEDICINE.searchName);
       }
     });
 
@@ -110,16 +103,16 @@ test.describe('Prescription consultation', () => {
       }
 
       // c) and d) quantity and packaging
-      await expect(prescriptionPage.quantity).toHaveText('1 szt.');
+      await expect(prescriptionPage.quantity).toHaveText(MEDICINE.quantity);
       await expect(prescriptionPage.packaging).toHaveText(`opakowanie: ${packaging}`);
 
       // e) and f) doctor details
-      await expect(prescriptionPage.doctorName).toHaveText(DOCTOR_NAME);
-      await expect(prescriptionPage.doctorDescription).toHaveText(DOCTOR_DESCRIPTION);
-      await expect(prescriptionPage.doctorAssignInfo).toHaveText(DOCTOR_ASSIGN_INFO);
+      await expect(prescriptionPage.doctorName).toHaveText(DOCTOR.name);
+      await expect(prescriptionPage.doctorDescription).toHaveText(DOCTOR.description);
+      await expect(prescriptionPage.doctorAssignInfo).toHaveText(DOCTOR.assignInfo);
 
       // g) the rating is rendered as five stars
-      await expect(prescriptionPage.doctorStars).toHaveCount(5);
+      await expect(prescriptionPage.doctorStars).toHaveCount(DOCTOR.ratingStars);
 
       // h) and i) the patient section
       await expect(prescriptionPage.patientDataTitle).toBeVisible();
@@ -133,7 +126,7 @@ test.describe('Prescription consultation', () => {
 
       // k) and l) the amount due, with the value in bold and in PLN
       await expect(prescriptionPage.priceRow).toContainText('Do zapłaty (konsultacja receptowa):');
-      await expect(prescriptionPage.priceValue).toHaveText(`${CONSULTATION_PRICE} PLN`);
+      await expect(prescriptionPage.priceValue).toHaveText(MEDICINE_PRICE_WITH_CURRENCY);
       await expect(prescriptionPage.priceValue).toHaveCSS('font-weight', '700');
 
       // m) the "select all" row is bold and has a checkbox
@@ -147,7 +140,7 @@ test.describe('Prescription consultation', () => {
 
       // o) all three action buttons are present
       await expect(prescriptionPage.cancelButton).toBeVisible();
-      await expect(prescriptionPage.bookPaidButton).toHaveText(`Umów za ${CONSULTATION_PRICE} PLN`);
+      await expect(prescriptionPage.bookPaidButton).toHaveText(`Umów za ${MEDICINE_PRICE_WITH_CURRENCY}`);
       await expect(prescriptionPage.bookFreeButton).toBeVisible();
     });
 
@@ -161,7 +154,7 @@ test.describe('Prescription consultation', () => {
       }
     });
 
-    await test.step(`6. Click "Umów za ${CONSULTATION_PRICE} PLN"`, async () => {
+    await test.step(`6. Click "Umów za ${MEDICINE_PRICE_WITH_CURRENCY}"`, async () => {
       await prescriptionPage.bookPaidButton.click();
 
       // a) the application hands the payment over to the external operator
