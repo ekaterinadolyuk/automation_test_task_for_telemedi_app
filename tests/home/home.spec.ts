@@ -11,8 +11,4 @@ test('homepage opens for a logged-in patient', async ({ page }) => {
   await expect(homePage.bookVisitButton).toBeVisible();
   await expect(homePage.consultationsLink).toBeVisible();
   await expect(homePage.documentationLink).toBeVisible();
-
-  // TEMPORARY: deliberately wrong assertion, used to verify that the CI
-  // workflow reports a failing run. Reverted straight after.
-  await expect(homePage.bookVisitButton).toHaveText('Ten tekst nie istnieje');
 });
