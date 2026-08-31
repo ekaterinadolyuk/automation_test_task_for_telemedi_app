@@ -11,6 +11,7 @@
     "test:home": "playwright test --project=home",
     "test:prescription": "playwright test --project=prescription",
     "test:user-profile": "playwright test --project=user-profile",
+    "test:remote-consultation": "playwright test --project=remote-consultation",
     "report": "playwright show-report",
     "typecheck": "tsc --noEmit"
   },

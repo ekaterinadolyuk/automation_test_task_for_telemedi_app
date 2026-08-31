@@ -63,5 +63,16 @@ export default defineConfig({
       dependencies: ['login'],
       use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
     },
+
+    /**
+     * Remote consultation. Holds a `test.fail()` test covering an open defect,
+     * so a failure here is the expected result — see the README.
+     */
+    {
+      name: 'remote-consultation',
+      testDir: './tests/remote-consultation',
+      dependencies: ['login'],
+      use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
+    },
   ],
 });
